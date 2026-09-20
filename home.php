@@ -139,7 +139,7 @@ $total_jobs = $conn->query("SELECT COUNT(*) as cnt FROM careers WHERE user_id IN
 </div>
 
 <!-- Upcoming Events -->
-<div class="container mt-5 pb-5">
+<!--<div class="container mt-5 pb-5">
     <h4 class="section-title">Upcoming Events</h4>
     <hr class="divider">
     <?php
@@ -178,10 +178,10 @@ $total_jobs = $conn->query("SELECT COUNT(*) as cnt FROM careers WHERE user_id IN
         </div>
     </div>
     <?php endwhile; endif; ?>
-</div>
+</div>-->
 
 <!-- Past Events -->
-<div class="container mt-5 pb-5">
+<!--<div class="container mt-5 pb-5">
     <h4 class="section-title">Past Events</h4>
     <hr class="divider">
     <?php
@@ -220,7 +220,7 @@ $total_jobs = $conn->query("SELECT COUNT(*) as cnt FROM careers WHERE user_id IN
     <?php endwhile; ?>
     </div>
     <?php endif; ?>
-</div>
+</div>-->
 
 <script>
     // Active nav highlight

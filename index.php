@@ -78,25 +78,35 @@ a.jqte_tool_label.unselectable {
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
                         <?php $page = isset($_GET['page']) ? $_GET['page'] : 'home'; ?>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'home' ? 'active' : '' ?>" href="index.php?page=home">Home</a></li>
+                        
+                        <!-- Events Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle <?php echo ($page == 'upcoming_events' || $page == 'past_events') ? 'active' : '' ?>" href="#" data-toggle="dropdown">Events</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="index.php?page=upcoming_events">Upcoming Events</a>
+                                <a class="dropdown-item" href="index.php?page=past_events">Past Events</a>
+                            </div>
+                        </li>
+
                         <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'alumni_list' ? 'active' : '' ?>" href="index.php?page=alumni_list">Alumni</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'careers' ? 'active' : '' ?>" href="index.php?page=careers">Jobs</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'forum' ? 'active' : '' ?>" href="index.php?page=forum">Forums</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'about' ? 'active' : '' ?>" href="index.php?page=about">About</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'feedback' ? 'active' : '' ?>" href="index.php?page=feedback">Feedback</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger <?php echo $page == 'achievements' ? 'active' : '' ?>" href="index.php?page=achievements">Achievements</a></li>
+
                         <?php if(!isset($_SESSION['login_id'])): ?>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#" id="login">Login</a></li>
                         <?php else: ?>
                         <li class="nav-item">
-                          <div class=" dropdown mr-4">
-                              <a href="#" class="nav-link js-scroll-trigger"  id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['login_name'] ?> <i class="fa fa-angle-down"></i></a>
+                          <div class="dropdown mr-4">
+                              <a href="#" class="nav-link js-scroll-trigger" id="account_settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['login_name'] ?> <i class="fa fa-angle-down"></i></a>
                                 <div class="dropdown-menu" aria-labelledby="account_settings" style="left: -2.5em;">
-                                  <!--<a class="dropdown-item" href="index.php?page=my_account" id="manage_my_account"><i class="fa fa-cog"></i> Manage Account</a>-->
                                   <a class="dropdown-item" href="admin/ajax.php?action=logout2"><i class="fa fa-power-off"></i> Logout</a>
                                 </div>
                           </div>
                         </li>
                         <?php endif; ?>
-                        
-                     
                     </ul>
                 </div>
             </div>

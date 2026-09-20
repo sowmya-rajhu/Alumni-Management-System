@@ -118,6 +118,8 @@ Class Action {
 		$data = " name = '".$firstname.' '.$lastname."' ";
 		$data .= ", username = '$email' ";
 		$data .= ", password = '".md5($password)."' ";
+		$data .= ", security_question = '$security_question' ";
+		$data .= ", security_answer = '".md5($security_answer)."' ";
 		$chk = $this->db->query("SELECT * FROM users where username = '$email' ")->num_rows;
 		if($chk > 0){
 			return 2;
@@ -128,13 +130,17 @@ Class Action {
 			$uid = $this->db->insert_id;
 			$data = '';
 			foreach($_POST as $k => $v){
-				if($k =='password')
-					continue;
-				if(empty($data) && !is_numeric($k) )
-					$data = " $k = '$v' ";
-				else
-					$data .= ", $k = '$v' ";
-			}
+    if($k == 'password')
+        continue;
+    if($k == 'security_question')
+        continue;
+    if($k == 'security_answer')
+        continue;
+    if(empty($data) && !is_numeric($k))
+        $data = " $k = '$v' ";
+    else
+        $data .= ", $k = '$v' ";
+}
 			if($_FILES['img']['tmp_name'] != ''){
 							$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
 							$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/uploads/'. $fname);
@@ -403,6 +409,41 @@ Class Action {
 		if($commit)
 			return 1;
 	}
+	function check_email(){
+    extract($_POST);
+    $qry = $this->db->query("SELECT * FROM users WHERE username = '$email'");
+    if($qry->num_rows > 0){
+        $row = $qry->fetch_assoc();
+        $response = array(
+            'status' => 1,
+            'question' => $row['security_question']
+        );
+        return json_encode($response);
+    } else {
+        $response = array('status' => 0);
+        return json_encode($response);
+    }
+}
+
+function check_answer(){
+    extract($_POST);
+    $qry = $this->db->query("SELECT * FROM users WHERE username = '$email' AND security_answer = '".md5($answer)."'");
+    if($qry->num_rows > 0){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+function reset_password(){
+    extract($_POST);
+    $save = $this->db->query("UPDATE users SET password = '".md5($password)."' WHERE username = '$email'");
+    if($save){
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 	function save_post_event(){
 		extract($_POST);
@@ -420,4 +461,45 @@ Class Action {
 		if($save)
 			return 1;
 	}
+	function save_feedback(){
+    extract($_POST);
+    $data = " subject = '$subject' ";
+    $data .= ", message = '".htmlentities(str_replace("'","&#x2019;",$message))."' ";
+    $data .= ", rating = '$rating' ";
+    $data .= ", user_id = '{$_SESSION['login_id']}' ";
+    $save = $this->db->query("INSERT INTO feedback set $data");
+    if($save)
+        return 1;
+}
+function save_achievement(){
+    extract($_POST);
+    $data = " title = '$title' ";
+    $data .= ", description = '".htmlentities(str_replace("'","&#x2019;",$description))."' ";
+    $data .= ", category = '$category' ";
+    $data .= ", achievement_date = '$achievement_date' ";
+    $data .= ", user_id = '{$_SESSION['login_id']}' ";
+    $save = $this->db->query("INSERT INTO achievements set $data");
+    if($save)
+        return 1;
+}
+
+function delete_achievement(){
+    extract($_POST);
+    $delete = $this->db->query("DELETE FROM achievements where id = ".$id." AND user_id = '{$_SESSION['login_id']}'");
+    if($delete)
+        return 1;
+}
+function delete_feedback(){
+    extract($_POST);
+    $delete = $this->db->query("DELETE FROM feedback where id = ".$id);
+    if($delete)
+        return 1;
+}
+
+function delete_achievement_admin(){
+    extract($_POST);
+    $delete = $this->db->query("DELETE FROM achievements where id = ".$id);
+    if($delete)
+        return 1;
+}
 }

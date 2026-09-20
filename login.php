@@ -13,6 +13,8 @@
 			<input type="password" name="password" required="" class="form-control">
 			<small><a href="index.php?page=signup" id="new_account">Create New Account</a></small>
 <br>
+<small><a href="index.php?page=forgot_password" style="color:#17a2b8;">Forgot Password?</a></small>
+<br>
 <small><a href="admin/index.php" style="color: #999;">Admin? Login here</a></small>
 		</div>
 		<button class="button btn btn-info btn-sm">Login</button>

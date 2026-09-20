@@ -127,9 +127,30 @@ include 'admin/db_connect.php';
                     </div>
                 </div>
 
-                <div id="msg"></div>
+                <div class="divider-line"></div>
 
-                <button class="btn btn-primary">Create Account</button>
+<div class="form-group">
+    <label class="control-label">Security Question <span class="text-danger">*</span></label>
+    <select class="custom-select" name="security_question" required>
+        <option value="">-- Select a Security Question --</option>
+        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+        <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+        <option value="What was the name of your primary school?">What was the name of your primary school?</option>
+        <option value="What is your favourite movie?">What is your favourite movie?</option>
+        <option value="What is your favourite teacher's name?">What is your favourite teacher's name?</option>
+        <option value="What city were you born in?">What city were you born in?</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label class="control-label">Security Answer <span class="text-danger">*</span></label>
+    <input type="text" class="form-control" name="security_answer" required placeholder="Enter your answer">
+    <small class="text-muted">Remember this answer — it will be used to reset your password.</small>
+</div>
+
+<div id="msg"></div>
+
+<button class="btn btn-primary">Create Account</button>
 
                 <div class="text-center mt-3">
                     <small class="text-muted">Already have an account? <a href="#" onclick="uni_modal('Login','login.php')" style="color:#17a2b8;">Login here</a></small>

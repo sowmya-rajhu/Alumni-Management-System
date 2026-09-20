@@ -81,15 +81,37 @@ include 'admin/db_connect.php';
     <div class="card mb-4">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-4 mb-2">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                         </div>
-                        <input type="text" class="form-control" id="filter" placeholder="Filter name, course, batch...">
+                        <input type="text" class="form-control" id="filter" placeholder="Search by name...">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3 mb-2">
+                    <select class="custom-select" id="filter_course">
+                        <option value="">-- All Courses --</option>
+                        <?php
+                        $courses = $conn->query("SELECT * FROM courses ORDER BY course ASC");
+                        while($c = $courses->fetch_assoc()):
+                        ?>
+                        <option value="<?php echo $c['course'] ?>"><?php echo $c['course'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <select class="custom-select" id="filter_batch">
+                        <option value="">-- All Batches --</option>
+                        <?php
+                        $batches = $conn->query("SELECT DISTINCT batch FROM alumnus_bio WHERE status = 1 ORDER BY batch DESC");
+                        while($b = $batches->fetch_assoc()):
+                        ?>
+                        <option value="<?php echo $b['batch'] ?>"><?php echo $b['batch'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-2">
                     <button class="btn btn-primary btn-block" id="search">Search</button>
                 </div>
             </div>
@@ -157,24 +179,32 @@ include 'admin/db_connect.php';
         if(e.which == 13)
             $('#search').trigger('click')
     })
+    $('#filter_course, #filter_batch').change(function(){
+        $('#search').trigger('click')
+    })
     $('#search').click(function(){
-        var txt = $('#filter').val()
+        var txt = $('#filter').val().toLowerCase()
+        var course = $('#filter_course').val().toLowerCase()
+        var batch = $('#filter_batch').val().toLowerCase()
+        
         start_load()
-        if(txt == ''){
-            $('.item').show()
-            end_load()
-            return false;
-        }
+        
         $('.item').each(function(){
             var content = "";
             $(this).find(".filter-txt").each(function(){
-                content += ' ' + $(this).text()
+                content += ' ' + $(this).text().toLowerCase()
             })
-            if((content.toLowerCase()).includes(txt.toLowerCase())){
-                $(this).toggle(true)
-            }else{
-                $(this).toggle(false)
-            }
+            
+            var show = true;
+            
+            if(txt != '' && !content.includes(txt))
+                show = false;
+            if(course != '' && !content.includes(course))
+                show = false;
+            if(batch != '' && !content.includes(batch))
+                show = false;
+            
+            $(this).toggle(show)
         })
         end_load()
     })

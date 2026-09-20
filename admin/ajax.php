@@ -143,10 +143,49 @@ if($action == "get_pdetails"){
 	if($get)
 		echo $get;
 }
+if($action == "check_email"){
+    $get = $crud->check_email();
+    if($get)
+        echo $get;
+}
+if($action == "check_answer"){
+    $get = $crud->check_answer();
+    echo $get;
+}
+if($action == "reset_password"){
+    $get = $crud->reset_password();
+    if($get)
+        echo $get;
+}
 if($action == "save_post_event"){
 	$save = $crud->save_post_event();
 	if($save)
 		echo $save;
+}
+if($action == "save_feedback"){
+    $save = $crud->save_feedback();
+    if($save)
+        echo $save;
+}
+if($action == "save_achievement"){
+    $save = $crud->save_achievement();
+    if($save)
+        echo $save;
+}
+if($action == "delete_achievement"){
+    $save = $crud->delete_achievement();
+    if($save)
+        echo $save;
+}
+if($action == "delete_feedback"){
+    $save = $crud->delete_feedback();
+    if($save)
+        echo $save;
+}
+if($action == "delete_achievement_admin"){
+    $save = $crud->delete_achievement_admin();
+    if($save)
+        echo $save;
 }
 ob_end_flush();
 ?>
