@@ -110,8 +110,8 @@
 <!-- Hero Banner -->
 <div class="about-hero">
     <div class="container">
-        <h2>Welcome to PSG College Alumni Connect</h2>
-        <p>Connecting PSG College graduates with their alma mater, fellow alumni, and current students — fostering a lifelong bond across the world.</p>
+        <h2>Welcome to PSGCAS Alumni Connect</h2>
+        <p>Connecting PSGCAS graduates with their alma mater, fellow alumni, and current students — fostering a lifelong bond across the world.</p>
     </div>
 </div>
 
